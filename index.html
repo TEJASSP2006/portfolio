@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Portfolio - TEJASSP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .text-glow {
+            text-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 15px #00aaff;
+        }
+        .text-glow-green {
+            text-shadow: 0 0 5px #00ff9c, 0 0 10px #00ff9c;
+        }
+        .border-glow {
+            box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff inset;
+        }
+        .bg-matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00ff9c;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card {
+            background-color: rgba(13, 17, 23, 0.5);
+            border: 1px solid #30363d;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px #00aaff, 0 0 5px #00aaff inset;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            animation: modal-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modal-pop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .glitch-effect {
+            animation: glitch 1s linear infinite;
+        }
+        @keyframes glitch{
+            2%,64%{ transform: translate(2px,0) skew(0deg); }
+            4%,60%{ transform: translate(-2px,0) skew(0deg); }
+            62%{ transform: translate(0,0) skew(5deg); }
+        }
+        /* Loading spinner */
+        .loader {
+            border: 4px solid #30363d;
+            border-left-color: #00ff9c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <canvas id="matrix-canvas" class="bg-matrix"></canvas>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-opacity-80 backdrop-blur-md border-b border-gray-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-glow-green">[//] TEJASSP</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="nav-link">01_ABOUT</a>
+                <a href="#skills" class="nav-link">02_SKILLS</a>
+                <a href="#projects" class="nav-link">03_PROJECTS</a>
+                <a href="#contact" class="nav-link">04_CONTACT</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#about" class="block py-2 px-4 text-sm hover:bg-gray-800">01_ABOUT</a>
+            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-800">02_SKILLS</a>
+            <a href="#projects" class="block py-2 px-4 text-sm hover:bg-gray-800">03_PROJECTS</a>
+            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-800">04_CONTACT</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-24">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col justify-center items-start">
+            <h1 class="text-lg text-green-400 mb-4">Status: <span class="text-glow-green">Online</span> // Location: Cyberspace</h1>
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">
+                <span id="typing-text" class="text-glow"></span><span class="animate-ping">_</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl">
+                B.Tech Student in Computer Science & Engineering, specializing in Cybersecurity and Digital Forensics.
+            </p>
+            <div class="mt-8 flex space-x-4">
+                <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-600/30">View Case Files</a>
+                <a href="[YOUR_RESUME_LINK]" target="_blank" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-gray-700/30">Download Dossier</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20">
+            <h3 class="text-3xl font-bold text-glow-green mb-8">[ 01_ABOUT_ME ]</h3>
+            <div class="card p-8 grid md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-1 flex justify-center">
+                    <div class="w-48 h-48 rounded-full border-4 border-blue-500 p-2 relative">
+                        <img src="https://iili.io/FkndD2n.jpg" alt="Your Photo" class="rounded-full w-full h-full object-cover">
+                        <span class="absolute bottom-2 right-2 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900"></span>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="mb-4 text-lg">//> Authenticating user...</p>
+                    <p class="mb-4 text-lg text-green-400">//> Access Granted.</p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Hello! I'm TEJAS SANTOSH PAITHANKAR, a passionate cybersecurity enthusiast currently pursuing my B.Tech. I thrive on the challenge of dissecting complex digital systems, hunting for vulnerabilities, and piecing together digital evidence. My goal is to leverage my skills to build a more secure digital world. When I'm not in front of a terminal, I enjoy CTF competitions and contributing to open-source security projects.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <h3 class="text-3xl font-bold text-glow-green mb-8">[ 02_SKILLSET_MATRIX ]</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Card -->
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="shield-check" class="w-8 h-8 mr-4 text-blue-400"></i>
+                        <h4 class="text-xl font-bold">Cyber Security</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        <li>Vulnerability Assessment</li>
+                        <li>Penetration Testing (Web & Network)</li>
+                        <li>Threat Modeling & Analysis</li>
+                        <li>SIEM & Log Management</li>
+                    </ul>
+                </div>
+                <!-- Skill Card -->
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="fingerprint" class="w-8 h-8 mr-4 text-blue-400"></i>
+                        <h4 class="text-xl font-bold">Digital Forensics</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        <li>File System Analysis (NTFS, EXT4)</li>
+                        <li>Memory Forensics (Volatility)</li>
+                        <li>Network Forensics (Wireshark)</li>
+                        <li>Incident Response</li>
+                    </ul>
+                </div>
+                <!-- Skill Card -->
+                <div class="card p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="code-2" class="w-8 h-8 mr-4 text-blue-400"></i>
+                        <h4 class="text-xl font-bold">Languages & Scripting</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        <li>Python (Scapy, Pandas)</li>
+                        <li>Bash Scripting</li>
+                        <li>C/C++</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <h3 class="text-3xl font-bold text-glow-green mb-8">[ 03_CASE_FILES ]</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card -->
+                <div class="card overflow-hidden cursor-pointer project-card" data-project="project2">
+                    <img src="https://placehold.co/600x400/1a202c/00aaff?text=Project+Beta" alt="Project Thumbnail" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Project Beta: Phishing Detector</h4>
+                        <p class="text-gray-400 text-sm">A browser extension using machine learning to detect and flag phishing websites.</p>
+                         <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">JavaScript</span>
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">TensorFlow.js</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Gemini Threat Intel Section -->
+        <section id="threat-intel" class="py-20">
+            <h3 class="text-3xl font-bold text-glow-green mb-8">[ ✨ THREAT INTEL BRIEFING ]</h3>
+            <div class="card p-8 max-w-4xl mx-auto">
+                <p class="text-center mb-6">Click the button below to get a real-time cybersecurity threat intelligence summary, powered by the Gemini API.</p>
+                <div class="text-center mb-6">
+                    <button id="get-threat-intel-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-600/30">
+                        Generate Today's Briefing
+                    </button>
+                </div>
+                <div id="threat-intel-result-container" class="mt-6">
+                    <div id="threat-intel-loader" class="hidden justify-center items-center">
+                        <div class="loader"></div>
+                        <p class="ml-4 text-lg text-gray-400">Fetching latest intel from Gemini...</p>
+                    </div>
+                    <div id="threat-intel-result" class="bg-gray-900 border border-gray-700 rounded-lg p-6 whitespace-pre-wrap text-gray-300 hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <h3 class="text-3xl font-bold text-glow-green mb-8">[ 04_SECURE_CHANNEL ]</h3>
+            <div class="card p-8 max-w-2xl mx-auto">
+                <p class="text-center mb-6">Have a query or a challenge? Initiate contact. All transmissions are monitored.</p>
+                <form action="mailto:[tejas@tejassp.codes]" method="post" enctype="text/plain">
+                    <div class="mb-4">
+                        <label for="name" class="block mb-2 text-sm font-bold text-gray-400">CALLSIGN / NAME</label>
+                        <input type="text" id="name" name="name" class="w-full px-3 py-2 text-white bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block mb-2 text-sm font-bold text-gray-400">EMAIL</label>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 text-white bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block mb-2 text-sm font-bold text-gray-400">MESSAGE</label>
+                        <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 text-white bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-600/30">
+                            Transmit Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Socials Section -->
+        <section id="socials" class="py-20 text-center">
+            <h3 class="text-3xl font-bold text-glow-green mb-12">[ FIND_ME_ON_THE_WEB ]</h3>
+            <div class="flex justify-center items-center gap-8 md:gap-12">
+                <!-- GitHub Link -->
+                <a href="https://github.com/TEJASSP2006" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white hover:text-glow-green transition-all duration-300 transform hover:-translate-y-1">
+                    <i data-lucide="github" class="w-10 h-10 md:w-12 md:h-12 mx-auto"></i>
+                    <span class="block mt-2 text-sm">GitHub</span>
+                </a>
+                <!-- LinkedIn Link -->
+                <a href="https://www.linkedin.com/in/tejassp2006/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white hover:text-glow transition-all duration-300 transform hover:-translate-y-1">
+                    <i data-lucide="linkedin" class="w-10 h-10 md:w-12 md:h-12 mx-auto"></i>
+                    <span class="block mt-2 text-sm">LinkedIn</span>
+                </a>
+                <!-- Instagram Link -->
+                <a href="https://www.instagram.com/itz_tejassp2006?igsh=MTZqMmdlMTV0dHNvdg==" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white hover:text-glow transition-all duration-300 transform hover:-translate-y-1">
+                    <i data-lucide="instagram" class="w-10 h-10 md:w-12 md:h-12 mx-auto"></i>
+                    <span class="block mt-2 text-sm">Instagram</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+            <p>Designed & Built by TEJAS SANTOSH PAITHANKAR</p>
+            <p>System Status: All systems nominal. Last scan: <span id="last-scan-time"></span></p>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content card max-w-3xl w-11/12 mx-auto my-12 p-8 relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x-circle" class="w-8 h-8"></i>
+            </button>
+            <div id="modal-body">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Typing effect
+        const typingText = document.getElementById('typing-text');
+        const text = "Cybersecurity Specialist.";
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', type);
+        
+        // Matrix background effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%+-/~{[|`]}';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff9c'; // Green color for the matrix letters
+            ctx.font = fontSize + 'px arial';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Recalculate columns and reset drops on resize
+        });
+
+        // Footer Time
+        document.getElementById('last-scan-time').textContent = new Date().toUTCString();
+
+        // Project Modal Logic
+        const projectModal = document.getElementById('project-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalBody = document.getElementById('modal-body');
+
+        const projectData = {
+            project1: {
+                title: "Project Alpha: Malware Sandbox",
+                img: "https://placehold.co/600x400/1a202c/00ff9c?text=Project+Alpha",
+                description: "This project involved creating a Cuckoo-inspired sandboxing environment to automate the analysis of potentially malicious binaries. The system uses virtualization to isolate the malware, then monitors its system calls, file modifications, network traffic, and registry changes to generate a comprehensive report on its behavior.",
+                tech: ["Python", "QEMU/KVM", "Flask", "MongoDB"],
+                github: "#",
+                live: "#"
+            },
+            project2: {
+                title: "Project Beta: Phishing Detector",
+                img: "https://placehold.co/600x400/1a202c/00aaff?text=Project+Beta",
+                description: "A machine learning-powered browser extension that analyzes URLs, page content, and SSL certificates in real-time to detect and warn users about potential phishing attempts. The model was trained on a large dataset of phishing and legitimate websites to identify common patterns used by attackers.",
+                tech: ["JavaScript", "TensorFlow.js", "HTML/CSS", "Python (for model training)"],
+                github: "#",
+                live: "#"
+            },
+            project3: {
+                title: "Project Gamma: Network IDS",
+                img: "https://placehold.co/600x400/1a202c/ffffff?text=Project+Gamma",
+                description: "Developed a signature-based Intrusion Detection System (IDS) using Python and the Scapy library. The system captures network packets and matches them against a defined set of rules to detect common attacks like port scanning, DoS attempts, and specific exploit signatures. Alerts are logged for further analysis.",
+                tech: ["Python", "Scapy", "Socket Programming"],
+                github: "#",
+                live: "#"
+            }
+        };
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.dataset.project;
+                const data = projectData[projectId];
+
+                modalBody.innerHTML = `
+                    <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                    <h3 class="text-3xl font-bold text-glow-green mb-4">${data.title}</h3>
+                    <p class="text-gray-300 mb-6">${data.description}</p>
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold mb-2">Technology Stack:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${data.tech.map(t => `<span class="bg-gray-700 text-sm font-semibold mr-2 px-3 py-1 rounded">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="${data.github}" target="_blank" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"><i data-lucide="github" class="w-5 h-5 mr-2"></i> View on GitHub</a>
+                        <a href="${data.live}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"><i data-lucide="external-link" class="w-5 h-5 mr-2"></i> Live Demo</a>
+                    </div>
+                `;
+                lucide.createIcons();
+                projectModal.style.display = 'block';
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            projectModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == projectModal) {
+                projectModal.style.display = 'none';
+            }
+        });
+
+        // Gemini API Threat Intel Briefing
+        const getThreatIntelBtn = document.getElementById('get-threat-intel-btn');
+        const threatIntelResult = document.getElementById('threat-intel-result');
+        const threatIntelLoader = document.getElementById('threat-intel-loader');
+
+        getThreatIntelBtn.addEventListener('click', async () => {
+            threatIntelResult.classList.add('hidden');
+            threatIntelLoader.style.display = 'flex'; // Use style.display for flex
+            getThreatIntelBtn.disabled = true;
+            getThreatIntelBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const prompt = "Generate a concise cybersecurity threat intelligence briefing for today. Focus on the most significant new vulnerabilities, active threat actors, or widespread campaigns. Format it for a cybersecurity student or junior analyst. Use markdown for headings and bullet points.";
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    threatIntelResult.textContent = text;
+                    threatIntelResult.classList.remove('hidden');
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+            } catch (error) {
+                console.error("Error fetching threat intel:", error);
+                threatIntelResult.textContent = `// ERROR: Unable to fetch threat intelligence.\n// ${error.message}\n// Please try again later.`;
+                threatIntelResult.classList.remove('hidden');
+            } finally {
+                threatIntelLoader.style.display = 'none';
+                getThreatIntelBtn.disabled = false;
+                getThreatIntelBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        });
+
+    </script>
+</body>
+</html>
