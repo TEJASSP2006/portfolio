@@ -213,6 +213,20 @@
             <h3 class="text-3xl font-bold text-glow-green mb-8">[ 03_CASE_FILES ]</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project Card -->
+                <div class="card overflow-hidden cursor-pointer project-card" data-project="project1">
+                    <img src="https://iili.io/FrYifhx.png" alt="Project Thumbnail" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">Project Alpha: Password Generator </h4>
+                        <p class="text-gray-400 text-sm">A secure password generator with a cyber-matrix theme. Create strong, random passwords, check their security level in real-time, and export them when needed.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">HTML</span>
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">CSS</span>
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">JavaScript</span>
+                            <span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">vercel</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project Card -->
                 <div class="card overflow-hidden cursor-pointer project-card" data-project="project2">
                     <img src="https://placehold.co/600x400/1a202c/00aaff?text=Project+Beta" alt="Project Thumbnail" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -395,11 +409,15 @@
         const projectData = {
             project1: {
                 title: "Project Alpha: Malware Sandbox",
-                img: "https://placehold.co/600x400/1a202c/00ff9c?text=Project+Alpha",
-                description: "This project involved creating a Cuckoo-inspired sandboxing environment to automate the analysis of potentially malicious binaries. The system uses virtualization to isolate the malware, then monitors its system calls, file modifications, network traffic, and registry changes to generate a comprehensive report on its behavior.",
-                tech: ["Python", "QEMU/KVM", "Flask", "MongoDB"],
-                github: "#",
-                live: "#"
+                img: "https://iili.io/FrYifhx.png",
+                description: "HTML: Sets up the basic structure, creating all the elements like the title, password display box, slider, and buttons.
+
+CSS: Handles all the visuals. It creates the dark "Matrix" theme, the glowing green text, and the digital rain background.
+
+JavaScript: This is the "brain" of the page. It runs the Matrix animation, generates a random password based on your settings, checks how strong it is, and makes the copy and export buttons work.",
+                tech: ["HTML", "CSS", "JavaScript", "vercel"],
+                github: "https://github.com/TEJASSP2006/Password-Generator-",
+                live: "https://pass-gen-tejassp.vercel.app/"
             },
             project2: {
                 title: "Project Beta: Phishing Detector",
@@ -507,3 +525,4 @@
     </script>
 </body>
 </html>
+
